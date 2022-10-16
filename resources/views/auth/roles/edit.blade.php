@@ -1,12 +1,13 @@
 <x-app-layout>
 
-    <div class="bg-light p-4 rounded">
-        <h1>Add new role</h1>
-        <div class="lead">
-            Add new role and assign permissions.
+
+    <div class="card card-primary">
+
+        <div class="card-header">
+            <h3 class="card-title"> Edit role and manage permissions.</h3>
         </div>
 
-        <div class="container mt-4">
+        <div class="card-body mt-2">
 
             @if (count($errors) > 0)
                 <div class="alert alert-danger">
@@ -19,11 +20,12 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('access.roles.store') }}">
+            <form method="POST" action="{{ route('access.roles.update', $role->id) }}">
+                @method('patch')
                 @csrf
                 <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input value="{{ old('name') }}"
+                    <label for="name" class="form-label">Role Name</label>
+                    <input value="{{ $role->name }}"
                         type="text"
                         class="form-control"
                         name="name"
@@ -45,16 +47,19 @@
                                 <input type="checkbox"
                                 name="permission[{{ $permission->name }}]"
                                 value="{{ $permission->name }}"
-                                class='permission'>
+                                class='permission'
+                                {{ in_array($permission->name, $rolePermissions)
+                                    ? 'checked'
+                                    : '' }}>
                             </td>
-                            <td>{{ $permission->name }}</td>
-                            <td>{{ $permission->guard_name }}</td>
+                            <td class="modal-text">{{ $permission->name }}</td>
+                            <td class="modal-text">{{ $permission->guard_name }}</td>
                         </tr>
                     @endforeach
                 </table>
 
-                <button type="submit" class="btn btn-primary">Save user</button>
-                <a href="{{ route('access.users.index') }}" class="btn btn-default">Back</a>
+                <button type="submit" class="btn btn-sm btn-outline-primary"><i class="mdi mdi-check-circle-outline" style="font-size: 20px"></i> Save changes</button>
+
             </form>
         </div>
 
@@ -80,5 +85,4 @@
         });
     </script>
 @endsection
-
 </x-app-layout>

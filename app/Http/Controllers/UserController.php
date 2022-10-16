@@ -5,18 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use Arr;
-use DB;
-use Hash;
 use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
-use DataTables;
 use Illuminate\Auth\Events\Registered;
 use App\Mail\Subscribe;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Yajra\DataTables\Facades\DataTables;
 
 class UserController extends Controller
 {
+     // public $user;
+     public function __construct()
+     {
+        // $this->authorizeResource(User::class, 'user');
+     }
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +30,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        //$users = User::all();
+
+        //$this->authorize('viewAny', User::class);
         return view('auth.users.index');
 
     }
@@ -32,15 +39,21 @@ class UserController extends Controller
     /* Fetch Users  */
     public function getUsers(Request $request)
     {
-       // if ($request->ajax()) {
+       if ($request->ajax()) {
             $users = User::with('roles')->get();
            // dd($users);
-            return Datatables::of($users)
+            return DataTables::of($users)
                    ->addIndexColumn()
                    ->addColumn('role', function (User $user) {
                     $roles = '';
                     foreach($user->getRoleNames() as $role){
-                    $roles.='<label class="badge badge-primary">';
+                    if($role == 'administrator'){
+                    $roles.='<label class="badge badge-warning" style="margin-right:4px">';
+                    }else if($role == 'user'){
+                        $roles.='<label class="badge badge-primary" style="margin-right:4px">';
+                    }else{
+                        $roles.='<label class="badge badge-default" style="margin-right:4px">';
+                    }
                     $roles.= ' '.$role.'';
                     $roles.='</label>';
                     }
@@ -59,8 +72,8 @@ class UserController extends Controller
                     </i></a>
                     </div>
                     <div class="col-md-2">
-
-                        <a onclick="deactivate_user(this)" data-id="'.$user->id.'" id="user_delete" class="pt-0 btn btn-xs btn-default-outline btn-flat"  ><i class="mdi mdi mdi-delete-circle-outline text-secondary" style="font-size: 24px">
+                        <a onclick="deactivate_user(this)" data-id="'.$user->id.'" id="user_delete"
+                        class="pt-0 btn btn-xs btn-default-outline btn-flat"  ><i class="mdi mdi mdi-delete-circle-outline text-secondary" style="font-size: 24px">
                         </i></a>
 
                     </div>
@@ -71,7 +84,7 @@ class UserController extends Controller
                 ->rawColumns(['action','role'])
 
                 ->make(true);
-       // }
+       }
     }
     /**
      * Show the form for creating a new resource.
@@ -147,6 +160,28 @@ class UserController extends Controller
         );
     }
 
+        /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function profile($id)
+    {
+        $user = User::find($id);
+
+        $userRoles = $user->getRoleNames();
+        $roles = Role::all()->pluck('name');
+
+        return view(
+            'auth.profile.index',
+            ['roles' => $roles,
+             'user' => $user,
+             'userRoles' => $userRoles
+             ]
+        );
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -173,7 +208,7 @@ class UserController extends Controller
          DB::table('model_has_roles')->where('model_id',$user->id)->delete();
 
         $user->assignRole($request->input('roles'));
-        return redirect('access/users')->with('success', 'User updated successfully!');
+        return redirect('access/users')->with('success', 'User Profile updated successfully!');
 
     }
 

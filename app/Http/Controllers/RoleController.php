@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class RoleController extends Controller
 {
+    public $user;
+    public function __construct()
+    {
+        $this->authorizeResource(Role::class, 'role');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,8 +23,9 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::all();
+        $permissions = Permission::all();
         return view('auth.roles.index',
-        ['roles' => $roles]);
+        ['roles' => $roles, 'permissions'=> $permissions]);
     }
 
     /**
@@ -27,6 +35,7 @@ class RoleController extends Controller
      */
     public function create()
     {
+
          $permissions = Permission::all();
          return view('auth.roles.create',
          ['permissions'=>$permissions]);
@@ -72,12 +81,13 @@ class RoleController extends Controller
     public function edit($id)
     {
         $role = Role::find($id);
-        $role->permissions->pluck('id','name');
+        $rolePermissions = $role->permissions->pluck('name')->toArray();
         $permissions = Permission::all();
 
-        return view('auth.roles.create',
+        return view('auth.roles.edit',
         [
             'permissions'=>$permissions,
+            'rolePermissions' => $rolePermissions,
             'role'=>$role
         ]);
     }

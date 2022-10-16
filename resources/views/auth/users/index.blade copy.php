@@ -1,14 +1,15 @@
-<?php
-use Illuminate\Support\Arr;
-?>
+
 
 <x-app-layout>
  <!-- start  -->
  <div class="row">
     <div class="col-12">
-        <div style="border-bottom:1px solid #ccc; padding-bottom:35px">
-            <h4 class="float-left">Users</h4>
-            <span class="float-right"><a href="{{ route('access.users.create') }}" class="btn btn-primary">Add User </a></span>
+        <div style="border-bottom:1px solid #ccc; padding-bottom:35px" >
+        <div style="padding-bottom: 10px;">
+            <h4 class="float-left">Roles</h4>
+                    <span class="float-right" ><a href="{{ route('access.users.create') }}" class="btn btn-xs btn-primary">Add Role </a></span>
+        </div>
+
         </div>
     </div>
 </div>

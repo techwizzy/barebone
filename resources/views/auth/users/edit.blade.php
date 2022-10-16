@@ -30,6 +30,7 @@
         {!! Form::model($user, ['method' => 'PATCH','route' => ['access.users.update', $user->id]]) !!}
         <form action="{{ route('access.users.update',$user->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('PATCH')
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">

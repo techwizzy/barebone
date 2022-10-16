@@ -51,13 +51,7 @@
                 <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
 
                     <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
-                        <i class="mdi mdi-account-outline"></i>
-                        <span>Profile</span>
-                    </a>
-
-                    <!-- item-->
-                    <a href="javascript:void(0);" class="dropdown-item notify-item">
+                    <a href="{{ route('access.users.profile',Auth::user()->id) }}" class="dropdown-item notify-item">
                         <i class="mdi mdi-settings-outline"></i>
                         <span>Settings</span>
                     </a>
@@ -185,8 +179,8 @@
             </a>
             <ul class="nav-second-level" aria-expanded="false">
                 <li><a href="{{ route('access.users.index') }}">Users</a></li>
-                <li><a href="{{ route('access.users.list') }}">Roles</a></li>
-                <li><a href="components-icons.html">Permissions</a></li>
+                <li><a href="{{ route('access.roles.index') }}">Roles</a></li>
+                <li><a href="{{ route('access.permissions.index') }}">Permissions</a></li>
             </ul>
         </li>
         <li>

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -30,11 +32,19 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('users/list', [ UserController::class, 'getUsers'])->name('users.list');
         Route::post('users/delete-user', [UserController::class, 'deleteUser'])->name('users.deleteuser');
         Route::get('users/delete/{id}', [UserController::class, 'UserController@destroy'])->name('users.delete');
+        Route::get('users/profile/{id}', [UserController::class, 'profile'])->name('users.profile');
 
         Route::resources([
             'users' => UserController::class
         ]);
 
+        Route::resources([
+            'roles' => RoleController::class
+        ]);
+
+        Route::resources([
+            'permissions' => PermissionController::class
+        ]);
 
 
      /*    Route::resources([

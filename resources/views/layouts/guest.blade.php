@@ -28,7 +28,7 @@
                                     </a>
 
                                 </div>
-                                <x-validation-errors></x-validation-errors>
+                                  <x-validation-errors></x-validation-errors>
                                   {{ $slot }}
 
                             </div>
