@@ -73,7 +73,7 @@ class PermissionController extends Controller
     public function edit($id)
     {
         $permission = Permission::find($id);
-        return  view('auth.permission.edit', ['permission'=>$permission]);
+        return  view('auth.permissions.edit', ['permission'=>$permission]);
     }
 
     /**
@@ -92,7 +92,7 @@ class PermissionController extends Controller
 
         $permission->update($request->only('name'));
 
-        return redirect()->route('permissions.index')
+        return redirect()->route('access.permissions.index')
             ->withSuccess(__('Permission updated successfully.'));
     }
 

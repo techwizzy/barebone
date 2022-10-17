@@ -39,9 +39,14 @@
 
                         <label for="permissions" class="form-label">Assign Permissions</label>
 
-                        <table class="table table-striped">
+                        <table class="table table-bordered">
                             <thead>
-                                <th scope="col" width="1%"><input type="checkbox" name="all_permission"></th>
+                                <th scope="col" width="1%">
+                                    <div class="checkbox checkbox-info checkbox-single  checkbox-circle">
+                                    <input type="checkbox" name="all_permission">
+                                    <label></label>
+                                    </div>
+                                </th>
                                 <th scope="col" width="20%">Name</th>
                                 <th scope="col" width="1%">Guard</th>
                             </thead>
@@ -49,10 +54,13 @@
                             @foreach($permissions as $permission)
                                 <tr>
                                     <td>
+                                        <div class="checkbox checkbox-info checkbox-single  checkbox-circle">
                                         <input type="checkbox"
                                         name="permission[{{ $permission->name }}]"
                                         value="{{ $permission->name }}"
                                         class='permission'>
+                                        <label></label>
+                                        </div>
                                     </td>
                                     <td class="modal-text">{{ $permission->name }}</td>
                                     <td class="modal-text">{{ $permission->guard_name }}</td>
@@ -71,7 +79,7 @@
         </div><!-- /.modal -->
 
 
-        <table id="responsive-datatable" class="table table-bordered table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+        <table id="rolesTable" class="table table-bordered table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
          <thead>
 
              <th width="1%">No</th>
@@ -101,34 +109,61 @@
 
 
 <script>
-    // $(document).ready(function() {
-    //   var table2 = $('#dataTable').DataTable( {
-    //        lengthChange: false,
+    $(document).ready(function() {
 
-    //        buttons: [ {
-    //                extend:    'excel',
-    //                text:      '<i class="fa fa-file-excel-o text-success" style="font-size:14px"></i> Download Excel',
-    //                className: 'btn btn-flat btn-light'
-    //                }]
-    //        } );
+        var table = $('#rolesTable').DataTable({
+          processing: true,
+          serverSide: false,
+          dom: "<'row'<'col-sm-3'l><'col-sm-6 text-center'B><'col-sm-3'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                buttons: [ {
+                extend:    'excel',
+                text:      '<i class="mdi mdi-file-excel-outline text-success"></i>Excel',
+                className: 'btn btn-flat btn-sm btn-light'
+            },
+            {
+                extend:    'pdf',
+                text:      '<i class="mdi mdi mdi-file-pdf-box-outline text-danger"></i>PDF',
+                className: 'btn btn-flat btn-sm btn-light'
+            },
+            {
+                extend:    'print',
+                text:      '<i class="mdi mdi-printer text-primary"></i>Print',
+                className: 'btn btn-flat btn-sm btn-light'
+            },
+            {
+                extend:    'colvis',
+                text:      '<i class="mdi mdi-eye-off-outline text-warning"></i>Columns',
+                className: 'btn btn-flat btn-sm btn-light'
+            },
 
-    //        table2.buttons().container()
-    //        .appendTo( '#dataTable_wrapper .col-md-6:eq(0)' );
+    ],
+    lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All'],
+        ]
 
-    //         $('[name="all_permission"]').on('click', function() {
+      });
 
-    //             if($(this).is(':checked')) {
-    //                 $.each($('.permission'), function() {
-    //                     $(this).prop('checked',true);
-    //                 });
-    //             } else {
-    //                 $.each($('.permission'), function() {
-    //                     $(this).prop('checked',false);
-    //                 });
-    //             }
+      table.buttons().container()
+        .appendTo( $('div.eight.column:eq(0)', table.table().container()) );
 
-    //         });
-    //     });
+        $('[name="all_permission"]').on('click', function() {
+
+            if($(this).is(':checked')) {
+                $.each($('.permission'), function() {
+                    $(this).prop('checked',true);
+                });
+            } else {
+                $.each($('.permission'), function() {
+                    $(this).prop('checked',false);
+                });
+            }
+
+            });
+
+    });
     </script>
 
 

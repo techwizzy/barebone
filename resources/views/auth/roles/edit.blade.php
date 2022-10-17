@@ -3,7 +3,9 @@
 
     <div class="card card-primary">
 
-        <div class="card-header">
+        <div  style="border-bottom:1px dashed #ccc; padding:10px" >
+
+
             <h3 class="card-title"> Edit role and manage permissions.</h3>
         </div>
 
@@ -34,9 +36,14 @@
 
                 <label for="permissions" class="form-label">Assign Permissions</label>
 
-                <table class="table table-striped">
+                <table class="table table-bordered">
                     <thead>
-                        <th scope="col" width="1%"><input type="checkbox" name="all_permission"></th>
+                        <th scope="col" width="1%">
+                            <div class="checkbox checkbox-info checkbox-single  checkbox-circle">
+                            <input type="checkbox"   name="all_permission">
+                            <label> </label>
+                            </div>
+                        </th>
                         <th scope="col" width="20%">Name</th>
                         <th scope="col" width="1%">Guard</th>
                     </thead>
@@ -44,6 +51,7 @@
                     @foreach($permissions as $permission)
                         <tr>
                             <td>
+                                <div class="checkbox checkbox-info checkbox-single  checkbox-circle">
                                 <input type="checkbox"
                                 name="permission[{{ $permission->name }}]"
                                 value="{{ $permission->name }}"
@@ -51,6 +59,8 @@
                                 {{ in_array($permission->name, $rolePermissions)
                                     ? 'checked'
                                     : '' }}>
+                                    <label></label>
+                                </div>
                             </td>
                             <td class="modal-text">{{ $permission->name }}</td>
                             <td class="modal-text">{{ $permission->guard_name }}</td>
@@ -66,9 +76,10 @@
     </div>
 
 
-@section('scripts')
-    <script type="text/javascript">
-        $(document).ready(function() {
+
+
+      <script>
+    $(document).ready(function() {
             $('[name="all_permission"]').on('click', function() {
 
                 if($(this).is(':checked')) {
@@ -81,8 +92,8 @@
                     });
                 }
 
-            });
+                });
         });
     </script>
-@endsection
+
 </x-app-layout>

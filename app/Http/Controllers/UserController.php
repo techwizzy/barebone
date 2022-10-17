@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use App\Mail\Subscribe;
+use App\Models\UserSetting;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -48,11 +49,11 @@ class UserController extends Controller
                     $roles = '';
                     foreach($user->getRoleNames() as $role){
                     if($role == 'administrator'){
-                    $roles.='<label class="badge badge-warning" style="margin-right:4px">';
+                    $roles.='<label class="badge badge-info" style="margin-right:4px">';
                     }else if($role == 'user'){
-                        $roles.='<label class="badge badge-primary" style="margin-right:4px">';
+                        $roles.='<label class="badge badge-teal" style="margin-right:4px">';
                     }else{
-                        $roles.='<label class="badge badge-default" style="margin-right:4px">';
+                        $roles.='<label class="badge badge-dark" style="margin-right:4px">';
                     }
                     $roles.= ' '.$role.'';
                     $roles.='</label>';
@@ -173,11 +174,18 @@ class UserController extends Controller
         $userRoles = $user->getRoleNames();
         $roles = Role::all()->pluck('name');
 
+        if(!empty(UserSetting::where('client_id', $id)->first()->toArray())){
+            $settings = UserSetting::where('client_id', $id)->first()->toArray();
+
+        }else{
+            $settings = [];
+        }
         return view(
             'auth.profile.index',
             ['roles' => $roles,
              'user' => $user,
-             'userRoles' => $userRoles
+             'userRoles' => $userRoles,
+             'settings' => $settings
              ]
         );
     }

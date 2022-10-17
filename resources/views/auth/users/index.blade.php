@@ -3,10 +3,10 @@
 
  <!-- start  -->
  <div class="row">
-    <div class="col-12" style="border-bottom:1px solid #ccc;">
+    <div class="col-12" style="border-bottom:1px dashed #ccc;">
         <div >
             <h4 class="float-left">Users</h4>
-            <span class="float-right"><a href="{{ route('access.users.create') }}" class="btn btn-primary btn-sm"><i class=" mdi mdi-plus-circle-outline "></i> Add User </a></span>
+            <span class="float-right"><a href="{{ route('access.users.create') }}" class="btn btn-primary btn-xs"><i class=" mdi mdi-plus-circle-outline "></i> Add User </a></span>
         </div>
     </div>
 </div>

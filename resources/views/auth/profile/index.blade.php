@@ -1,4 +1,4 @@
-<x-app-layout>
+ <x-app-layout>
     <div class="col-xl-12">
         <div class="card">
             <div class="card-body">
@@ -81,8 +81,17 @@
                     </div>
 
                     <div class="tab-pane" id="settings-b2">
+                        <form method="POST"
+                        @empty($settings)
+                        action="{{route('user-setting.store')}}"
+                        @else
+                         action="{{route('user-setting.update')}}"
+                        @endempty >
+                        @csrf
+
                         <div class="card">
                             <div class="table-responsive">
+                             <input type="hidden" value="{{$user->id}}" name="client_id"/>
                                 <table class="table table-centered">
                                     <thead>
                                         <tr>
@@ -92,26 +101,118 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Receive SMS about your account</td>
                                             <td>
-                                                <input type="checkbox"   data-plugin="switchery" data-color="#64b0f2" data-size="small" />
+                                                <p>Receive SMS Alerts</p>
+                                                <div id="phone"
+
+                                                 class="form-group">
+                                                    <input type="tel" class="form-control" name="phone"
+                                                    @empty($settings)
+                                                    value=""
+                                                    @else
+                                                    value="{{$settings['phone']}}"
+                                                    @endempty
+                                                    placeholder="Enter Phone Number">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <input type="checkbox"
+                                                id="showPhone"
+                                                name="receive_phone_alerts"
+                                                @empty($settings)
+
+                                                @else
+                                                checked
+                                                @endempty
+                                                 data-plugin="switchery" data-color="#64b0f2" data-size="small" />
                                             </td>
                                         </tr>
 
                                         <tr>
-                                            <td>Receive Email alerts </td>
                                             <td>
-                                                <input type="checkbox"   data-plugin="switchery" data-color="#64b0f2" data-size="small" />
+                                                <p>Receive Email Alerts</p>
+                                                <div id="email" class="form-group">
+                                                    <input type="email"
+                                                     class="form-control"
+                                                      name="email"
+                                                       data-toggle="tooltip"
+                                                       data-placement="right"
+                                                       data-original-title="change if you want a different email to receive alerts"
+
+                                                        @empty($settings)
+                                                        value="{{ $user->email}}"
+                                                        @else
+                                                        value="{{$settings['email']}}"
+                                                        @endempty
+                                                        placeholder="Enter Email">
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <input type="checkbox"
+                                                 id="showEmail"
+                                                 name="receive_email_alerts"
+                                                 @empty($settings)
+
+                                                 @else
+                                                 checked
+                                                 @endempty
+                                                  data-plugin="switchery"
+                                                  data-color="#64b0f2"
+                                                   data-size="small" />
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
+
                             </div>
                         </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <button type="submit" class="btn btn-outline-success  btn-sm btn-sm btn-flat"><i class="mdi mdi-checkbox-marked-circle-outline"> </i> Save changes</button>
+                        </div>
+                        </form>
 
                 </div>
             </div>
         </div>
     </div>
+    <script>
+
+         $(function () {
+
+        let setting = {!! json_encode($settings) !!};
+        let sms_setting = setting.receive_sms_alerts;
+        let email_setting = setting.receive_email_alerts;
+       // console.log(sms_setting);
+        if(sms_setting !== "on"){
+            $('#phone').hide();
+        }else{
+            $('#phone').fadeIn();
+        }
+
+
+        //show it when the checkbox is clicked
+        $('#showPhone').on('change', function () {
+            if ($(this).prop('checked')) {
+                $('#phone').fadeIn();
+            } else {
+                $('#phone').hide();
+            }
+        });
+
+        if(email_setting !== "on"){
+        $('#email').hide();
+        }else{
+            $('#email').fadeIn();
+        }
+        //show it when the checkbox is clicked
+        $('#showEmail').on('change', function () {
+            if ($(this).prop('checked')) {
+                $('#email').fadeIn();
+            } else {
+                $('#email').hide();
+            }
+        });
+    });
+    </script>
 </x-app-layout>
 

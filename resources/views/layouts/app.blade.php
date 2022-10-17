@@ -112,5 +112,6 @@
             <script src="{{ asset('libs/summernote/summernote-bs4.min.js') }}"></script>
             <script src="{{ asset('libs/sweetalert2/sweetalert2.min.js') }}"></script>
             <script src="{{ asset('js/pages/form-advanced.init.js') }}"></script>
+            <script src="{{ asset('assets/js/app.min.js') }}"></script>
     </body>
 </html>

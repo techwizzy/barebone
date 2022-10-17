@@ -3,6 +3,7 @@
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserSettingController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 /*
@@ -26,7 +27,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard', function () {
         $message = 'Good to see you again,  ' . Auth::user()->name;
         return redirect('access/users')->with('success', $message);
- })->name('dashboard');
+        })->name('dashboard');
 
     Route::group(['prefix' => 'access', 'as' => 'access.'], function () {
         Route::get('users/list', [ UserController::class, 'getUsers'])->name('users.list');
@@ -52,6 +53,8 @@ Route::group(['middleware' => ['auth']], function () {
         ]); */
     });
 
+    Route::post('user-setting/store', [UserSettingController::class, 'storeUserSetting'])->name('user-setting.store');
+    Route::post('user-setting/update', [UserSettingController::class, 'updateUserSetting'])->name('user-setting.update');
 });
 
 require __DIR__.'/auth.php';

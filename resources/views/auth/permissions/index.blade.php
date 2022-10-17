@@ -46,7 +46,7 @@
                 </div><!-- /.modal-dialog -->
             </div><!-- /.modal -->
         <div class="card-body">
-            <table id="responsive-datatable" class="table table-bordered table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+            <table id="permissionsTable" class="table table-bordered table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                 <thead>
                 <tr>
                     <th scope="col">Name</th>
@@ -73,18 +73,40 @@
     </div>
     <script>
         $(document).ready(function() {
-        //   var table2 = $('#dataTable').DataTable( {
-        //        lengthChange: false,
+            var table = $('#permissionsTable').DataTable({
+          processing: true,
+          serverSide: false,
+          dom: "<'row'<'col-sm-3'l><'col-sm-6 text-center'B><'col-sm-3'f>>" +
+                "<'row'<'col-sm-12'tr>>" +
+                "<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                buttons: [ {
+                extend:    'excel',
+                text:      '<i class="mdi mdi-file-excel-outline text-success"></i>Excel',
+                className: 'btn btn-flat btn-sm btn-light'
+            },
+            {
+                extend:    'pdf',
+                text:      '<i class="mdi mdi mdi-file-pdf-box-outline text-danger"></i>PDF',
+                className: 'btn btn-flat btn-sm btn-light'
+            },
+            {
+                extend:    'print',
+                text:      '<i class="mdi mdi-printer text-primary"></i>Print',
+                className: 'btn btn-flat btn-sm btn-light'
+            },
+            {
+                extend:    'colvis',
+                text:      '<i class="mdi mdi-eye-off-outline text-warning"></i>Columns',
+                className: 'btn btn-flat btn-sm btn-light'
+            },
 
-        //        buttons: [ {
-        //                extend:    'excel',
-        //                text:      '<i class="fa fa-file-excel-o text-success" style="font-size:14px"></i> Download Excel',
-        //                className: 'btn btn-flat btn-light'
-        //                }]
-        //        } );
+    ],
+    lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All'],
+        ]
 
-        //        table2.buttons().container()
-        //        .appendTo( '#dataTable_wrapper .col-md-6:eq(0)' );
+      });
 
                 $('[name="all_permission"]').on('click', function() {
 
