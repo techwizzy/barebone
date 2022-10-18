@@ -28,14 +28,13 @@
         <link href="{{ asset('css/icons.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-stylesheet" />
 
+
           <!-- Vendor js -->
           <script src="{{ asset('js/vendor.min.js') }}"></script>
-          <!-- App js -->
-          <script src="{{ asset('js/app.min.js') }}"></script>
 
 
     </head>
-    <body class="font-sans antialiased">
+    <body>
         <div id="wrapper">
 
             @include('layouts.navigation')
@@ -73,7 +72,7 @@
              <script src="{{ asset('libs/morris-js/morris.min.js') }}"></script>
              <script src="{{ asset('libs/raphael/raphael.min.js') }}"></script>
              <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
-             <script src="{{ asset('js/pages/dashboard.init.js') }}"></script>
+
                     <!-- Required datatable js -->
             <script src="{{ asset('libs/datatables/jquery.dataTables.min.js') }}"></script>
             <script src="{{ asset('libs/datatables/dataTables.bootstrap4.min.js') }}"></script>
@@ -112,6 +111,7 @@
             <script src="{{ asset('libs/summernote/summernote-bs4.min.js') }}"></script>
             <script src="{{ asset('libs/sweetalert2/sweetalert2.min.js') }}"></script>
             <script src="{{ asset('js/pages/form-advanced.init.js') }}"></script>
-            <script src="{{ asset('assets/js/app.min.js') }}"></script>
+              <!-- App js -->
+          <script src="{{ asset('js/app.min.js') }}"></script>
     </body>
 </html>

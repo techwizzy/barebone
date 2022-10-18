@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\UserSetting as MailUserSetting;
 use App\Models\UserSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Twilio\Rest\Client;
 
 class UserSettingController extends Controller
@@ -29,9 +32,19 @@ public function storeUserSetting(Request $request)
     $user_setting_model->receive_email_alerts = $request->input('receive_email_alerts');
     $user_setting_model->phone = $request->input('phone');
     $user_setting_model->email = $request->input('email');
-    $user_setting_model->save();
-    $this->sendMessage('Your Phone has been Registered for sms alerts successfully!!', $request->input('phone'));
+    $email =  Auth::user()->email;
+    $name =  Auth::user()->name;
+    //$user_setting_model->save();
+    if($user_setting_model->save()){
+        if($request->input('email') != $email){
+            Mail::to($email)->send(new MailUserSetting($email,$request->input('email'),$name));
+        }
+
+        //send sms
+        $this->sendMessage('Your Phone has been Registered for sms alerts successfully!!', '+'.$request->input('phone'));
+    }
     return back()->with(['success'=>" User Setting updated"]);
+
 }
 
     /**
@@ -50,8 +63,17 @@ public function updateUserSetting(Request $request)
     $user_setting_model->receive_email_alerts = $request->input('receive_email_alerts');
     $user_setting_model->phone = $request->input('phone');
     $user_setting_model->email = $request->input('email');
-    $user_setting_model->save();
-    $this->sendMessage('Your Phone has been Registered for sms alerts successfully!!', '+'.$request->input('phone'));
+    $email =  Auth::user()->email;
+    $name =  Auth::user()->name;
+    //$user_setting_model->save();
+    if($user_setting_model->save()){
+        if($request->input('email') != $email){
+            Mail::to($email)->send(new MailUserSetting($email,$request->input('email'),$name));
+        }
+
+        //send sms
+        $this->sendMessage('Your Phone has been Registered for sms alerts successfully!!', '+'.$request->input('phone'));
+    }
     return back()->with(['success'=>" User Setting updated"]);
 }
 

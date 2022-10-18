@@ -23,8 +23,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="text-center mb-4 mt-3">
-                                    <a href="index.html">
-                                        <span><img src="/images/logo-dark.png" alt="" height="30"></span>
+                                    <a href="">
+                                        <span><img src="/images/aloispack-logo.png" alt="" height="30"><h3>Alois Pack</h3></span>
                                     </a>
 
                                 </div>

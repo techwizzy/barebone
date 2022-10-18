@@ -43,7 +43,7 @@
 
             <li class="dropdown notification-list">
                 <a class="nav-link dropdown-toggle nav-user mr-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                    <img src="/images/users/avatar-1.jpg" alt="user-image" class="rounded-circle">
+                    <img src="/images/user.png" alt="user-image" class="rounded-circle">
                     <span class="pro-user-name ml-1">
                         {{ Auth::user()->name }}  <i class="mdi mdi-chevron-down"></i>
                     </span>
@@ -88,9 +88,10 @@
 
         <!-- LOGO -->
         <div class="logo-box">
-            <a href="index.html" class="logo text-center logo-dark">
+            <a href="" class="logo text-center logo-dark">
                 <span class="logo-lg">
-                    <img src="/images/logo-dark.png" alt="" height="26">
+                    <img src="/images/aloispack-logo.png" alt="" height="48">
+                    <h3>Alois Pack</h3>
                     <!-- <span class="logo-lg-text-dark">Simple</span> -->
                 </span>
                 <span class="logo-sm">
@@ -99,7 +100,7 @@
                 </span>
             </a>
 
-            <a href="index.html" class="logo text-center logo-light">
+            <a href="" class="logo text-center logo-light">
                 <span class="logo-lg">
                     <img src="/images/logo-light.png" alt="" height="26">
                     <!-- <span class="logo-lg-text-light">Simple</span> -->
@@ -118,20 +119,7 @@
                 </button>
             </li>
 
-            <li class="d-none d-sm-block">
-                <form class="app-search">
-                    <div class="app-search-box">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <div class="input-group-append">
-                                <button class="btn" type="submit">
-                                    <i class="fas fa-search"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </li>
+
         </ul>
    </div>
 
@@ -140,11 +128,11 @@
 
     <div class="user-box">
            <div class="float-left">
-                <img src="/images/users/avatar-1.jpg" alt="" class="avatar-md rounded-circle">
+                <img src="/images/user.png" alt="" class="avatar-md rounded-circle" >
             </div>
             <div class="user-info">
                 <a href="#"> {{ Auth::user()->name }}</a>
-                <p class="text-muted m-0">Administrator</p>
+                <p class="text-muted m-0">{{ Auth::user()->roles[0]['name'] }}</p>
             </div>
         </div>
 
@@ -173,7 +161,7 @@
 
         <li>
             <a href="javascript: void(0);">
-                <i class="ti-light-bulb"></i>
+                <i class="ti-shield"></i>
                 <span> Access Control </span>
                 <span class="menu-arrow"></span>
             </a>

@@ -173,8 +173,13 @@ class UserController extends Controller
 
         $userRoles = $user->getRoleNames();
         $roles = Role::all()->pluck('name');
+        $settings = [];
+        $userCollection = UserSetting::where('client_id', $id)->first();
+        if($userCollection){
+           $settings = $userCollection->toArray();
+        }
 
-        if(!empty(UserSetting::where('client_id', $id)->first()->toArray())){
+        if(!empty($settings)){
             $settings = UserSetting::where('client_id', $id)->first()->toArray();
 
         }else{
