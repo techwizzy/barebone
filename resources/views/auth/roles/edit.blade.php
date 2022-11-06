@@ -36,7 +36,7 @@
 
                 <label for="permissions" class="form-label">Assign Permissions</label>
 
-                <table class="table table-bordered">
+                <table class="table table-bordered table-condensed">
                     <thead>
                         <th scope="col" width="1%">
                             <div class="checkbox checkbox-info checkbox-single  checkbox-circle">
@@ -68,7 +68,7 @@
                     @endforeach
                 </table>
 
-                <button type="submit" class="btn btn-sm btn-outline-primary"><i class="mdi mdi-check-circle-outline" style="font-size: 20px"></i> Save changes</button>
+                <button type="submit" class="btn btn-xs btn-outline-primary"><i class="mdi mdi-check-circle-outline" style="font-size: 15px"></i> Save changes</button>
 
             </form>
         </div>

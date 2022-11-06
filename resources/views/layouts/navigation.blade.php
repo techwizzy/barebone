@@ -77,11 +77,7 @@
                 </div>
             </li>
 
-            <li class="dropdown notification-list">
-                <a href="javascript:void(0);" class="nav-link right-bar-toggle">
-                    <i class="mdi mdi-settings-outline noti-icon"></i>
-                </a>
-            </li>
+
 
 
         </ul>

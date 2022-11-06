@@ -15,4 +15,6 @@ class UserSetting extends Model
         'phone',
         'email'
      ];
+
+     
 }
